@@ -56,18 +56,30 @@ public class Main {
         for (i = 0; i < dsthehienkhoitao.size(); i++) {
             dsthehienkhoitao.get(i).setNhan(toHopNhom);
         }
-        for (i = 0; i < dsthehienkhoitao.size(); i++) {
-            System.out.print(dsthehienkhoitao.get(i).getGiatri());
-            System.out.println(dsthehienkhoitao.get(i).getNhan());
-        }
-        //-------------------ket thuc khoi tao------------------------
-/*        // vong while
+//        for (i = 0; i < dsthehienkhoitao.size(); i++) {
+//            System.out.print(dsthehienkhoitao.get(i).getGiatri());
+//            System.out.println(dsthehienkhoitao.get(i).getNhan()+" ");
+//        }
+//        -------------------ket thuc khoi tao------------------------
+        // vong while
         ArrayList<Cum> dscum = new ArrayList<Cum>();
-        int i, j;
+        for (i = 0; i < dsthehienkhoitao.size(); i++ ) {
+            Cum cum = new Cum();
+            cum.themTheHien(dsthehienkhoitao.get(i));
+            cum.setNhancum(dsthehienkhoitao.get(i).getNhan());
+            dscum.add(cum);
+        }
+//        for ( i = 0; i < dscum.size(); i++) {
+//            dscum.get(i).inThongTinCum();
+//        }
+//        System.out.print(Main.kiemTraDung(dscum));
+
         double khoangcach;
         Diem luuvitri = new Diem();
         ArrayList<Diem> phanbiet = new ArrayList<Diem>();
-        while (!Main.kiemTraDung(dscum)) {
+        int test = 0 ;
+//        while (!Main.kiemTraDung(dscum)) {
+        while (test <2) {
             khoangcach = dscum.get(0).getKhoangCach(dscum.get(1));
             for (i = 0; i < dscum.size(); i++) {
                 for (j = i + 1; j < dscum.size(); j++) {
@@ -75,33 +87,37 @@ public class Main {
                         double d = dscum.get(i).getKhoangCach(dscum.get(j));
                         if (d < khoangcach) {
                             khoangcach = d;
-                            luuvitri.setA(i);// them cai setDiem(int a,int b) vao .
-                            luuvitri.setB(j);
+                            luuvitri.setDiem(i,j);// them cai setDiem(int a,int b) vao .
                         }
                     }
                 }
             }
             if (dscum.get(luuvitri.getA()).getNhancum() == dscum.get(luuvitri.getB()).getNhancum()) {
+                System.out.println("==");
                 dscum.get(luuvitri.getA()).gopCum(dscum.get(luuvitri.getB()));
                 dscum.remove(luuvitri.getB());
                 phanbiet.clear();
             }
+
             else {
                 if (dscum.get(luuvitri.getA()).getNhancum() == -1) {
                     dscum.get(luuvitri.getB()).gopCum(dscum.get(luuvitri.getA()));
                     dscum.remove(luuvitri.getA());
+                    System.out.println("==-1");
                     phanbiet.clear();
                 }
-                else
-                if (dscum.get(luuvitri.getB()).getNhancum() == -1) {
-                    dscum.get(luuvitri.getA()).gopCum(dscum.get(luuvitri.getB()));
-                    dscum.remove(luuvitri.getB());
-                    phanbiet.clear();
+                else {
+                    if (dscum.get(luuvitri.getB()).getNhancum() == -1) {
+                        dscum.get(luuvitri.getA()).gopCum(dscum.get(luuvitri.getB()));
+                        dscum.remove(luuvitri.getB());
+                        phanbiet.clear();
+                    } else
+                        phanbiet.add(new Diem(luuvitri.getA(), luuvitri.getB()));
                 }
-                else
-                    phanbiet.add(new Diem(luuvitri.getA(),luuvitri.getB()));
-
             }
-        }*/
+        }
+        for ( i = 0; i < dscum.size(); i++) {
+            dscum.get(i).inThongTinCum();
+        }
     }
 }

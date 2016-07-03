@@ -8,6 +8,9 @@ import java.util.ArrayList;
 public class Cum {
     private int sothehien;
     private int nhancum;
+    public Cum() {
+        this.nhancum = -1;
+    }
     private ArrayList <TheHien> dsthehien = new ArrayList<TheHien>();
 
     public int getSothehien() {
@@ -60,5 +63,12 @@ public class Cum {
             khoangcach += (this.getTam().get(i) - a.getTam().get(i))*(this.getTam().get(i) - a.getTam().get(i));
         }
         return Math.sqrt(khoangcach);
+    }
+    public void inThongTinCum () {
+        System.out.print("Danh sach the hien : ");
+        for (int i = 0; i < this.getDsthehien().size(); i++) {
+            System.out.print(this.getDsthehien().get(i).getGiatri());
+        }
+        System.out.println(" Nhan cum : " + this.nhancum);
     }
 }

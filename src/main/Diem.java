@@ -28,4 +28,8 @@ class Diem {
     public void setB(int b) {
         this.b = b;
     }
+    public void setDiem (int x, int y) {
+        this.a = x;
+        this.b = y;
+    }
 }
