@@ -9,7 +9,7 @@ package data;
 public class XML {
     int soluongnhan;
     public XML(String link) {
-        this.soluongnhan = 5;
+        this.soluongnhan = 2;
     }
 
     public int getSoluongnhan() {

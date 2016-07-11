@@ -20,21 +20,21 @@ public class ToHopNhom {
         Path filePath = Paths.get(link);
         Scanner scanner = null;
         ArrayList<Double> con = new ArrayList<Double>();
+        XML xml = new XML("");
+        int a = xml.getSoluongnhan();
         try {
             scanner = new Scanner(filePath);
-            int i = 0, j = 0;
+            int j = 0;
             while (scanner.hasNext()) {
                 if (scanner.hasNextDouble()) {
                     double q = scanner.nextDouble();
-                    if (j >= 5) {
+                    con.add(q);
+                    j++;
+                    if (j >= a) {
                         dstohop.add(con);
                         con = new ArrayList<Double>();
                         j = 0;
                     }
-                    con.add(q);
-                    j++;
-                } else {
-                    scanner.next();
                 }
             }
         } catch (IOException e) {
@@ -51,7 +51,7 @@ public class ToHopNhom {
         this.dstohop = dstohop;
     }
     public static void main(String []args) {
-        ToHopNhom test = new ToHopNhom("input/nhan.txt");
+        ToHopNhom test = new ToHopNhom("input/nhan2.txt");
         System.out.print(test.getDstohop());
     }
 }
