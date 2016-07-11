@@ -1,6 +1,7 @@
 package main;
 
 import data.ToHopNhom;
+import data.XML;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class TheHien {
         this.nhan = nhan;
 
     }
-    public void setNhan(ToHopNhom a) {
+    public void setNhan(XML a) {
         this.nhan = -1;
         for (int i = 0; i < a.getDstohop().size(); i++) {
             if (this.dsnhan.equals( a.getDstohop().get(i))) {

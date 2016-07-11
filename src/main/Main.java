@@ -1,6 +1,7 @@
 package main;
 
 import data.ARFF;
+import data.GhiToHop;
 import data.ToHopNhom;
 import data.XML;
 
@@ -25,8 +26,7 @@ public class Main {
     public static void main(String[] args) {
         //------------------------ cac buoc khoi tao---------------------------
         ArrayList<TheHien> dsthehienkhoitao = new ArrayList<TheHien>();
-//        ARFF filearff = new ARFF("input/example.arff");
-        ARFF filearff = new ARFF("input/example.arff");
+        ARFF filearff = new ARFF("input/test.arff");
         XML filexml = new XML("input/nhan.xml");
         int soluongnhan = filexml.getSoluongnhan();
         int i,j;
@@ -54,9 +54,8 @@ public class Main {
 
         //vong for nay dua cac to hop trong file tohopnhom vao 1 list. tu list nay se xac dinh nhom moi cua cac cum.
         //xac dinh cac nhan moi cua cac cum. tuong ung voi danh sach tohopnhom lay ra o tren.
-        ToHopNhom toHopNhom= new ToHopNhom("input/nhan2.txt");
         for (i = 0; i < dsthehienkhoitao.size(); i++) {
-            dsthehienkhoitao.get(i).setNhan(toHopNhom);
+            dsthehienkhoitao.get(i).setNhan(filexml);
         }
 
         //        -------------------ket thuc khoi tao------------------------

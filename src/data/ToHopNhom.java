@@ -20,7 +20,7 @@ public class ToHopNhom {
         Path filePath = Paths.get(link);
         Scanner scanner = null;
         ArrayList<Double> con = new ArrayList<Double>();
-        XML xml = new XML("");
+        XML xml = new XML("input/nhanexample.xml");
         int a = xml.getSoluongnhan();
         try {
             scanner = new Scanner(filePath);
