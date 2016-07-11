@@ -1,12 +1,9 @@
 package main;
 
 import data.ARFF;
-import data.GhiToHop;
-import data.ToHopNhom;
 import data.XML;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by trong_000 on 6/29/2016.

@@ -1,6 +1,5 @@
 package main;
 
-import data.ToHopNhom;
 import data.XML;
 
 import java.util.ArrayList;
