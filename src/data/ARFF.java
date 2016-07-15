@@ -14,13 +14,14 @@ import java.util.Map;
 /**
  * Created by trong_000 on 7/1/2016.
  * doc file arff .
- * muc dich chinh cua class la dua vao link file arff.
- * dau ra : list ten cac thuoc tinh, danh sach gia tri cua tung thuoc tinh.
+ * input: link file arff.
+ * output : list ten cac thuoc tinh, danh sach gia tri cua tung thuoc tinh.
  */
 public class ARFF {
     private ArrayList<ArrayList<Double>> dsgiatri ;
     private ArrayList<String> dsthuoctinh;
     private int sothehienbandau;
+
     public ARFF(String link) {
         dsgiatri = new ArrayList<ArrayList<Double>>();
         dsthuoctinh = new ArrayList<String>();
@@ -83,7 +84,7 @@ public class ARFF {
     }
 
     public static void main(String []args) {
-        ARFF test = new ARFF("input/test.arff");
+        ARFF test = new ARFF("input/label5.arff");
         System.out.println(test.getDsgiatri());
         System.out.println(test.getSothehienbandau());
     }

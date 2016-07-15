@@ -26,15 +26,9 @@ public class XML {
     int soluongnhan;
     ArrayList<ArrayList<Double>> dstohop;
 
-    public ArrayList<ArrayList<Double>> getDstohop() {
-        return dstohop;
-    }
-
-    public void setDstohop(ArrayList<ArrayList<Double>> dstohop) {
-        this.dstohop = dstohop;
-    }
-
     public XML(String linkxml) {
+
+        //tu link file xml, lay duoc so nhan.
         int dem = 0;
         try {
             File inputFile = new File(linkxml);
@@ -50,6 +44,7 @@ public class XML {
         }
         this.soluongnhan = dem;
 
+        //tu so nhan ghi vao file nhan.txt cac to hop nhom
         File file = new File("input/nhan.txt");
         if (!file.exists()) {
             try {
@@ -79,7 +74,7 @@ public class XML {
             e.printStackTrace();
         }
 
-
+        //doc file nhan.txt, lay ra list to hop nhom : dstohop
         dstohop = new ArrayList<ArrayList<Double>>();
         Path filePath = Paths.get("input/nhan.txt");
         Scanner scanner = null;
@@ -110,9 +105,18 @@ public class XML {
         return soluongnhan;
     }
 
+    public ArrayList<ArrayList<Double>> getDstohop() {
+        return dstohop;
+    }
+
+    public void setDstohop(ArrayList<ArrayList<Double>> dstohop) {
+        this.dstohop = dstohop;
+    }
+
     public void setSoluongnhan(int soluongnhan) {
         this.soluongnhan = soluongnhan;
     }
+
     public static  void  main(String []args) {
         XML test = new XML("input/nhanexample.xml");
         System.out.print(test.getSoluongnhan());
