@@ -23,31 +23,32 @@ import java.util.Scanner;
  * doc nguoc file arff va lay dung so nhan nay, ta co tap nhan.
  */
 public class XML {
-    int soluongnhan;
-    ArrayList<ArrayList<Double>> dstohop;
+    private int numberOfLabel_;
+    private ArrayList<ArrayList<Double>> listCombination_;
 
-    public XML(String linkxml) {
+    public XML(String linkXML) {
 
         //tu link file xml, lay duoc so nhan.
-        int dem = 0;
+        int count = 0;
         try {
-            File inputFile = new File(linkxml);
+            File inputFile = new File(linkXML);
             DocumentBuilderFactory dbFactory
                     = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("label");
-            dem = nList.getLength();
+            count = nList.getLength();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.soluongnhan = dem;
+        this.numberOfLabel_ = count;
 
         //tu so nhan ghi vao file nhan.txt cac to hop nhom
         File file = new File("input/nhan.txt");
         if (!file.exists()) {
             try {
+                file.mkdir();
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -61,9 +62,9 @@ public class XML {
         }
         BufferedWriter bw = new BufferedWriter(fw);
         try {
-            for(int i = 0; i <= Math.pow(2, dem)- 1; i++){
+            for(int i = 0; i <= Math.pow(2, count)- 1; i++){
                 int tmp = Integer.parseInt(Integer.toBinaryString(i));
-                for(int j = 0; j < dem; j++ ){
+                for(int j = 0; j < count; j++ ){
                     bw.write(tmp%10+" ");
                     tmp = tmp /10;
                 }
@@ -75,11 +76,11 @@ public class XML {
         }
 
         //doc file nhan.txt, lay ra list to hop nhom : dstohop
-        dstohop = new ArrayList<ArrayList<Double>>();
+        listCombination_ = new ArrayList<ArrayList<Double>>();
         Path filePath = Paths.get("input/nhan.txt");
         Scanner scanner = null;
         ArrayList<Double> con = new ArrayList<Double>();
-        int a = this.getSoluongnhan();
+        int a = this.getNumberOfLabel();
         try {
             scanner = new Scanner(filePath);
             int j = 0;
@@ -89,7 +90,7 @@ public class XML {
                     con.add(q);
                     j++;
                     if (j >= a) {
-                        dstohop.add(con);
+                        listCombination_.add(con);
                         con = new ArrayList<Double>();
                         j = 0;
                     }
@@ -101,26 +102,12 @@ public class XML {
 
     }
 
-    public int getSoluongnhan() {
-        return soluongnhan;
+    public int getNumberOfLabel() {
+        return numberOfLabel_;
     }
 
-    public ArrayList<ArrayList<Double>> getDstohop() {
-        return dstohop;
+    public ArrayList<ArrayList<Double>> getListCombination() {
+        return listCombination_;
     }
 
-    public void setDstohop(ArrayList<ArrayList<Double>> dstohop) {
-        this.dstohop = dstohop;
-    }
-
-    public void setSoluongnhan(int soluongnhan) {
-        this.soluongnhan = soluongnhan;
-    }
-
-    public static  void  main(String []args) {
-        XML test = new XML("input/nhanexample.xml");
-        System.out.print(test.getSoluongnhan());
-        System.out.print(test.getDstohop().size());
-
-    }
 }

@@ -13,22 +13,16 @@ public class Point {
         return a;
     }
 
-    public void setA(int a) {
-        this.a = a;
-    }
 
     public int getB() {
         return b;
     }
 
-    public void setB(int b) {
-        this.b = b;
-    }
-    public void setDiem (int x, int y) {
+    public void setPoint (int x, int y) {
         this.a = x;
         this.b = y;
     }
-    public boolean kiemTraPhanBiet (ArrayList<Point> arr) {
+    public boolean checkDistinct (ArrayList<Point> arr) {
         for (int i = 0; i < arr.size(); i++) {
             if  (this.a == arr.get(i).getA() && this.b == arr.get(i).getB())
                 return true;

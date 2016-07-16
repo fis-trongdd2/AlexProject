@@ -1,65 +1,66 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by trong_000 on 6/29/2016.
  */
 public class Cluster {
-    private int numberofcandidate;
-    private int labelofcluster;
-    private ArrayList <Candidate> listcandidate = new ArrayList<Candidate>();
-    private boolean identified = false;
+    private int numberOfCandidate_;
+    private int labelOfCluster_;
+    private List<Candidate> listCandidate_ = new ArrayList<Candidate>();
+    private boolean identified_ = false;
 
     public boolean getIdentified() {
-        return identified;
+        return identified_;
     }
 
     public void setIdentified(boolean identified) {
-        this.identified = identified;
+        this.identified_ = identified;
     }
 
-    public int getListcandidateSize() {
-        return listcandidate.size();
+    public int getListCandidateSize() {
+        return listCandidate_.size();
     }
 
 
-    public int getLabelofcluster() {
-        return labelofcluster;
+    public int getLabelOfCluster() {
+        return labelOfCluster_;
     }
 
-    public void setLabelofcluster(int labelofcluster) {
-        this.labelofcluster = labelofcluster;
+    public void setLabelOfCluster(int labelOfCluster) {
+        this.labelOfCluster_ = labelOfCluster;
     }
 
-    public ArrayList<Candidate> getListcandidate() {
-        return listcandidate;
+    public List<Candidate> getListCandidate() {
+        return listCandidate_;
     }
 
     public void joinCluster (Cluster a)  {
-        for (int i = 0; i < a.getListcandidateSize(); i++) {
-            listcandidate.add(a.getListcandidate().get(i));
+        for (Candidate c : a.getListCandidate()) {
+            listCandidate_.add(c);
         }
         a = null;
     }
     public void addCandidate (Candidate a) {
-        this.listcandidate.add(a);
+        this.listCandidate_.add(a);
     }
 
     public ArrayList<Double> getCentroid () {
-        ArrayList<Double> a = new ArrayList<Double>(this.getListcandidate().get(0).getValue());
-        int numberatribute = this.getListcandidate().get(0).getNumberOfAtribute();
-        for (int i = 1; i < this.getListcandidateSize(); i++) {
-            for (int j = 0; j < numberatribute; j++) {
-                a.set(  j,  a.get(j) + this.getListcandidate().get(i).getValue().get(j));
+        ArrayList<Double> a = new ArrayList<Double>(this.getListCandidate().get(0).getValue());
+        int numberOfAtribute = this.getListCandidate().get(0).getNumberOfAtribute();
+        for (int i = 1; i < this.getListCandidateSize(); i++) {
+            for (int j = 0; j < numberOfAtribute; j++) {
+                a.set(  j,  a.get(j) + this.getListCandidate().get(i).getValue().get(j));
             }
         }
-        for (int i = 0; i < numberatribute; i++) {
-            a.set(i,a.get(i)/this.getListcandidateSize());
+        for (int i = 0; i < numberOfAtribute; i++) {
+            a.set(i,a.get(i)/this.getListCandidateSize());
         }
         return a;
     }
-    public double getDistance (Cluster a) {
+    public double computeDistance (Cluster a) {
         double distance = 0;
         for (int i = 0; i < this.getCentroid().size(); i++) {
             distance += (this.getCentroid().get(i) - a.getCentroid().get(i))*(this.getCentroid().get(i) - a.getCentroid().get(i));
@@ -68,17 +69,17 @@ public class Cluster {
     }
     public void printCluster () {
         System.out.print("List candidate : ");
-        for (int i = 0; i < this.getListcandidate().size(); i++) {
-            System.out.print(this.getListcandidate().get(i).getValue());
+        for (Candidate c : this.getListCandidate()) {
+            System.out.print(c.getValue());
         }
-        System.out.println(" Label cluster : " + this.getLabelofcluster());
+        System.out.println(" Label cluster : " + this.getLabelOfCluster());
     }
     public String printClusterToString () {
         String a = "list candidate : ";
-        for (int i = 0; i < this.getListcandidate().size(); i++) {
-            a+= this.getListcandidate().get(i).getValue();
+        for (Candidate c : this.getListCandidate()) {
+            a+= c.getValue();
         }
-        a = a + " ;Label of cluster : " + this.getLabelofcluster();
+        a = a + " ;Label of cluster : " + this.getLabelOfCluster();
         return a;
     }
     public static void main(String []args) {

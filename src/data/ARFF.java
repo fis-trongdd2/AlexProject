@@ -18,13 +18,13 @@ import java.util.Map;
  * output : list ten cac thuoc tinh, danh sach gia tri cua tung thuoc tinh.
  */
 public class ARFF {
-    private ArrayList<ArrayList<Double>> dsgiatri ;
-    private ArrayList<String> dsthuoctinh;
-    private int sothehienbandau;
+    private ArrayList<ArrayList<Double>> listValue_ ;
+    private ArrayList<String> listAtribute_;
+    private int numberOfCadidateFirst_;
 
     public ARFF(String link) {
-        dsgiatri = new ArrayList<ArrayList<Double>>();
-        dsthuoctinh = new ArrayList<String>();
+        listValue_ = new ArrayList<ArrayList<Double>>();
+        listAtribute_ = new ArrayList<String>();
         //lay duong dan
         BufferedReader reader = null;
         try {
@@ -35,6 +35,7 @@ public class ARFF {
         ArffLoader.ArffReader arff = null;
         try {
             arff = new ArffLoader.ArffReader(reader);
+            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,43 +50,31 @@ public class ARFF {
             for (int j = 0; j < values.length; j++) {
                 con.add(values[j]);
             }
-            dsgiatri.add(con);
+            listValue_.add(con);
         }
-        sothehienbandau = con.size();
+        numberOfCadidateFirst_ = con.size();
         //dat gia tri cho List thuoc tinh
         for (int i = 0; i < data.numAttributes(); i++) {
-            dsthuoctinh.add(data.attribute(i).name());
+            listAtribute_.add(data.attribute(i).name());
         }
-
     }
 
-    public ArrayList<ArrayList<Double>> getDsgiatri() {
-        return dsgiatri;
+    public ArrayList<ArrayList<Double>> getListValue() {
+        return listValue_;
     }
 
-    public void setDsgiatri(ArrayList<ArrayList<Double>> dsgiatri) {
-        this.dsgiatri = dsgiatri;
+
+    public ArrayList<String> getListAtribute() {
+        return listAtribute_;
     }
 
-    public ArrayList<String> getDsthuoctinh() {
-        return dsthuoctinh;
+
+    public int getNumberOfCadidateFirst() {
+        return numberOfCadidateFirst_;
     }
 
-    public void setDsthuoctinh(ArrayList<String> dsthuoctinh) {
-        this.dsthuoctinh = dsthuoctinh;
-    }
-
-    public int getSothehienbandau() {
-        return sothehienbandau;
-    }
-
-    public void setSothehienbandau(int sothehienbandau) {
-        this.sothehienbandau = sothehienbandau;
-    }
 
     public static void main(String []args) {
         ARFF test = new ARFF("input/label5.arff");
-        System.out.println(test.getDsgiatri());
-        System.out.println(test.getSothehienbandau());
     }
 }
