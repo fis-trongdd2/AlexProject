@@ -1,6 +1,7 @@
 package main;
 
 import data.ARFF;
+import data.Distance;
 import data.XML;
 
 import java.io.BufferedWriter;
@@ -8,11 +9,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import static data.Distance.updateDistance;
 
 /**
  * Created by trong_000 on 6/29/2016.
  */
 public class Main {
+
     public static boolean checkFinish(ArrayList<Cluster> listCheck) {
         int a = listCheck.size();
         int count = 0;
@@ -70,48 +77,47 @@ public class Main {
     }
     public static void main(String[] args) {
         int i,j;
-//        ArrayList<Cum> listCluster = Main.ganCum("input/test.arff","input/nhan.xml");
         ArrayList<Cluster> listCluster = Main.setCluster("input/example.arff","input/nhanexample.xml");
-        ArrayList<Point> phanbiet = new ArrayList<Point>();
-        for (Cluster c : listCluster) {
+        for (Cluster c : listCluster ) {
             c.printCluster();
         }
-        int test = 0;
+        ArrayList<Point> phanbiet = new ArrayList<Point>();
+        Distance test = new Distance();
 
+        //chi de tao dl khoang cach lan dau tien. tu lan sau doc file ra .
+        test.setMapDistancesSorted(listCluster);
+        Map<Point,Double> map = test.getMapDistances();
         while (!Main.checkFinish(listCluster)) {
+            Iterator<Map.Entry<Point,Double>> entry=map.entrySet().iterator();
             Point saveIndex = new Point();
-            double distance = 100;
-
-            for (i = 0; i < listCluster.size(); i++) {
-                for (j = i + 1; j < listCluster.size(); j++) {
-                    Point k = new Point();
-                    k.setPoint(i,j);
-                    if (!k.checkDistinct(phanbiet)) {
-                        double d = listCluster.get(i).computeDistance(listCluster.get(j));
-                        if (d < distance) {
-                            distance = d;
-                            saveIndex.setPoint(i, j);// them cai setDiem(int a,int b) vao .
-                        }
-                    }
-                }
+            Map.Entry<Point, Double> en;
+            while ( entry.hasNext()) {
+                en = entry.next();
+                saveIndex = en.getKey();
+                if (!saveIndex.checkDistinct(phanbiet)) break;
             }
-            //System.out.println(khoangcach);
-            //System.out.println(saveIndex.getA() + " " + saveIndex.getB());
+            //System.out.println("index " + saveIndex.getA()+" "+saveIndex.getB());
             if (listCluster.get(saveIndex.getA()).getLabelOfCluster() == listCluster.get(saveIndex.getB()).getLabelOfCluster()) {
                 //System.out.println("bang nhau");
                 listCluster.get(saveIndex.getA()).joinCluster(listCluster.get(saveIndex.getB()));
                 listCluster.remove(saveIndex.getB());
+                System.out.println("gop "+ saveIndex.getA() + "voi " + saveIndex.getB());
+                updateDistance(listCluster,map,saveIndex.getA(),saveIndex.getB());
                 phanbiet.clear();
             } else {
                 //System.out.println("khac");
                 if (listCluster.get(saveIndex.getA()).getLabelOfCluster() == 0) {
                     listCluster.get(saveIndex.getB()).joinCluster(listCluster.get(saveIndex.getA()));
+                    System.out.println("gop "+ saveIndex.getA() + "voi " + saveIndex.getB());
                     listCluster.remove(saveIndex.getA());
+                    updateDistance(listCluster,map,saveIndex.getB(),saveIndex.getA());
                     phanbiet.clear();
                 } else {
                     if (listCluster.get(saveIndex.getB()).getLabelOfCluster() == 0) {
                         listCluster.get(saveIndex.getA()).joinCluster(listCluster.get(saveIndex.getB()));
+                        System.out.println("gop "+ saveIndex.getA() + "voi " + saveIndex.getB());
                         listCluster.remove(saveIndex.getB());
+                        updateDistance(listCluster,map,saveIndex.getA(),saveIndex.getB());
                         phanbiet.clear();
                     } else{
                         listCluster.get(saveIndex.getA()).setIdentified(true);
@@ -121,7 +127,15 @@ public class Main {
                 }
 
             }
-            //System.out.println("phan biet :"+phanbiet);
+            int count=0;
+            System.out.print(listCluster.size() + " ");
+            for (Cluster c : listCluster) {
+                if (c.getIdentified()==false) count++;
+            }
+            System.out.println(count);
+        }
+        for (Cluster c: listCluster) {
+            c.printCluster();
         }
         ArrayList <Cluster> listClusterUnlabel = Main.setCluster("input/exampleunlabel.arff","input/nhanexampletrong.xml");
         double min ;
@@ -137,7 +151,6 @@ public class Main {
             }
             listClusterUnlabel.get(i).setLabelOfCluster(index+1);
         }
-
 
         File file = new File("input/output.txt");
         if (!file.exists()) {

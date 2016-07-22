@@ -8,20 +8,26 @@ import java.util.ArrayList;
 public class Point {
     private int a;
     private int b;
+    public Point () {
 
+    }
+    public Point (double x, double y) {
+        this.a = (int) x;
+        this.b = (int) y;
+    }
     public int getA() {
         return a;
     }
-
 
     public int getB() {
         return b;
     }
 
-    public void setPoint (int x, int y) {
-        this.a = x;
-        this.b = y;
+    public void setPoint (double x, double y) {
+        this.a = (int) x;
+        this.b = (int) y;
     }
+
     public boolean checkDistinct (ArrayList<Point> arr) {
         for (int i = 0; i < arr.size(); i++) {
             if  (this.a == arr.get(i).getA() && this.b == arr.get(i).getB())

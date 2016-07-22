@@ -23,8 +23,8 @@ import java.util.Scanner;
  * doc nguoc file arff va lay dung so nhan nay, ta co tap nhan.
  */
 public class XML {
-    private int numberOfLabel_;
-    private ArrayList<ArrayList<Double>> listCombination_;
+    private int nLabel_;
+    private ArrayList<ArrayList<Double>> listCombinations_;
 
     public XML(String linkXML) {
 
@@ -39,16 +39,16 @@ public class XML {
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("label");
             count = nList.getLength();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.numberOfLabel_ = count;
+        this.nLabel_ = count;
 
         //tu so nhan ghi vao file nhan.txt cac to hop nhom
         File file = new File("input/nhan.txt");
         if (!file.exists()) {
             try {
-                file.mkdir();
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -76,7 +76,7 @@ public class XML {
         }
 
         //doc file nhan.txt, lay ra list to hop nhom : dstohop
-        listCombination_ = new ArrayList<ArrayList<Double>>();
+        listCombinations_ = new ArrayList<ArrayList<Double>>();
         Path filePath = Paths.get("input/nhan.txt");
         Scanner scanner = null;
         ArrayList<Double> con = new ArrayList<Double>();
@@ -90,7 +90,7 @@ public class XML {
                     con.add(q);
                     j++;
                     if (j >= a) {
-                        listCombination_.add(con);
+                        listCombinations_.add(con);
                         con = new ArrayList<Double>();
                         j = 0;
                     }
@@ -103,11 +103,11 @@ public class XML {
     }
 
     public int getNumberOfLabel() {
-        return numberOfLabel_;
+        return nLabel_;
     }
 
     public ArrayList<ArrayList<Double>> getListCombination() {
-        return listCombination_;
+        return listCombinations_;
     }
 
 }

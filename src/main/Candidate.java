@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Candidate {
     private List<Double> value_;
-    private List <Double> listLabel_;
+    private List <Double> listLabels_;
     private int label_;
 
 
@@ -25,7 +25,7 @@ public class Candidate {
     public void setLabel(XML a) {
         this.label_ = 0;
         for (int i = 0; i < a.getListCombination().size(); i++) {
-            if (this.listLabel_.equals( a.getListCombination().get(i))) {
+            if (this.listLabels_.equals( a.getListCombination().get(i))) {
                 this.label_ = i;
                 break;
             }
@@ -41,8 +41,8 @@ public class Candidate {
     }
 
 
-    public void setListLabel(ArrayList<Double> listLabel) {
-        this.listLabel_ = listLabel;
+    public void setListLabel(ArrayList<Double> listLabels) {
+        this.listLabels_ = listLabels;
     }
     public  void  addValue (double a) {
         this.value_.add(a);

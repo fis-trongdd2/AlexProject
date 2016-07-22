@@ -18,13 +18,13 @@ import java.util.Map;
  * output : list ten cac thuoc tinh, danh sach gia tri cua tung thuoc tinh.
  */
 public class ARFF {
-    private ArrayList<ArrayList<Double>> listValue_ ;
-    private ArrayList<String> listAtribute_;
-    private int numberOfCadidateFirst_;
+    private ArrayList<ArrayList<Double>> listValues_ ;
+    private ArrayList<String> listAtributes_;
+    private int nCadidateFirst_;
 
     public ARFF(String link) {
-        listValue_ = new ArrayList<ArrayList<Double>>();
-        listAtribute_ = new ArrayList<String>();
+        listValues_ = new ArrayList<ArrayList<Double>>();
+        listAtributes_ = new ArrayList<String>();
         //lay duong dan
         BufferedReader reader = null;
         try {
@@ -50,27 +50,27 @@ public class ARFF {
             for (int j = 0; j < values.length; j++) {
                 con.add(values[j]);
             }
-            listValue_.add(con);
+            listValues_.add(con);
         }
-        numberOfCadidateFirst_ = con.size();
+        nCadidateFirst_ = con.size();
         //dat gia tri cho List thuoc tinh
         for (int i = 0; i < data.numAttributes(); i++) {
-            listAtribute_.add(data.attribute(i).name());
+            listAtributes_.add(data.attribute(i).name());
         }
     }
 
     public ArrayList<ArrayList<Double>> getListValue() {
-        return listValue_;
+        return listValues_;
     }
 
 
     public ArrayList<String> getListAtribute() {
-        return listAtribute_;
+        return listAtributes_;
     }
 
 
     public int getNumberOfCadidateFirst() {
-        return numberOfCadidateFirst_;
+        return nCadidateFirst_;
     }
 
 

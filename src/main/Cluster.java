@@ -7,9 +7,9 @@ import java.util.List;
  * Created by trong_000 on 6/29/2016.
  */
 public class Cluster {
-    private int numberOfCandidate_;
+    private int nCandidate_;
     private int labelOfCluster_;
-    private List<Candidate> listCandidate_ = new ArrayList<Candidate>();
+    private List<Candidate> listCandidates_ = new ArrayList<Candidate>();
     private boolean identified_ = false;
 
     public boolean getIdentified() {
@@ -21,7 +21,7 @@ public class Cluster {
     }
 
     public int getListCandidateSize() {
-        return listCandidate_.size();
+        return listCandidates_.size();
     }
 
 
@@ -34,17 +34,17 @@ public class Cluster {
     }
 
     public List<Candidate> getListCandidate() {
-        return listCandidate_;
+        return listCandidates_;
     }
 
     public void joinCluster (Cluster a)  {
         for (Candidate c : a.getListCandidate()) {
-            listCandidate_.add(c);
+            listCandidates_.add(c);
         }
         a = null;
     }
     public void addCandidate (Candidate a) {
-        this.listCandidate_.add(a);
+        this.listCandidates_.add(a);
     }
 
     public ArrayList<Double> getCentroid () {
