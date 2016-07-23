@@ -41,14 +41,9 @@ public class Distance {
         catch (IOException e) {
             e.printStackTrace();
         }
-        Comparator<Map.Entry<Point, Double>> byMapValues = new Comparator<Map.Entry<Point, Double>>() {
-            @Override
-            public int compare(Map.Entry<Point, Double> left, Map.Entry<Point, Double> right) {
-                return left.getValue().compareTo(right.getValue());
-            }
-        };
         distances_ = new LinkedHashMap<Point, Double>();
         distances_ = sortByComparator(nDistances_);
+        System.out.println("size after set" + distances_.size());
         return distances_;
     }
     //them cac gia tri vao map nay. dong thoi ghi ra file input/distance
@@ -89,7 +84,7 @@ public class Distance {
         }
     }
 
-    public static void updateDistance (List<Cluster> clusters, Map map, int x, int y) {
+    public static Map updateDistance (List<Cluster> clusters, Map map, int x, int y) {
         List<Map.Entry<Point,Double>> list =
                 new LinkedList<Map.Entry<Point,Double>>(map.entrySet());
         for (Iterator<Map.Entry<Point,Double>> it = list.iterator(); it.hasNext();) {
@@ -116,23 +111,14 @@ public class Distance {
         }
 
         list = new LinkedList<Map.Entry<Point,Double>>(map.entrySet());
-        System.out.println("map size" + map.size());
+        //System.out.println("map size" + map.size());
         for (Iterator<Map.Entry<Point,Double>> it = list.iterator(); it.hasNext();) {
             Map.Entry<Point,Double> entry = it.next();
             if (entry.getKey().getA() == x || entry.getKey().getB() == x){
                 map.put(entry.getKey(),clusters.get(entry.getKey().getA()).computeDistance(clusters.get(entry.getKey().getB())));
             }
         }
-        map = sortByComparator(map);
-        list = new LinkedList<Map.Entry<Point,Double>>(map.entrySet());
-        for (Iterator<Map.Entry<Point,Double>> it = list.iterator(); it.hasNext();) {
-            Map.Entry<Point,Double> entry = it.next();
-            System.out.println(entry.getValue());
-        }
-        System.out.println();
-
-        //System.out.println("e");
-        //System.out.println(map.size());
+        return sortByComparator(map);
     }
     private static Map<Point,Double> sortByComparator(Map<Point,Double> unsortMap) {
 
