@@ -7,7 +7,6 @@ import java.util.List;
  * Created by trong_000 on 6/29/2016.
  */
 public class Cluster {
-    private int nCandidate_;
     private int labelOfCluster_;
     private List<Candidate> listCandidates_ = new ArrayList<Candidate>();
     private boolean identified_ = false;

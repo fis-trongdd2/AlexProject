@@ -47,7 +47,7 @@ public class Distance {
         return distances_;
     }
     //them cac gia tri vao map nay. dong thoi ghi ra file input/distance
-    public void setMapDistancesSorted (ArrayList<Cluster> listClusters){
+    public void setMapDistancesSorted (List<Cluster> listClusters){
         int i,j;
         File file = new File("input/distance.txt");
         if (!file.exists()) {

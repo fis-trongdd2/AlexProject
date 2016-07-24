@@ -31,6 +31,10 @@ public class Candidate {
             }
         }
     }
+
+    public void setLabel (int l) {
+        this.label_= l;
+    }
     public int getNumberOfAtribute () {
         return value_.size();
     }
@@ -44,7 +48,21 @@ public class Candidate {
     public void setListLabel(ArrayList<Double> listLabels) {
         this.listLabels_ = listLabels;
     }
-    public  void  addValue (double a) {
-        this.value_.add(a);
+
+    public double computeDistance (Cluster a) {
+        double distance = 0;
+        for (int i = 0; i < this.value_.size(); i++) {
+            distance += (this.value_.get(i) - a.getCentroid().get(i))*(this.value_.get(i) - a.getCentroid().get(i));
+        }
+        return Math.sqrt(distance);
+    }
+
+    public void printCandidate () {
+        System.out.print("List data : "+ this.getValue());
+        System.out.println(" Label candidate : " + this.getLabel());
+    }
+
+    public String valueToString () {
+        return  "List data : "+ this.getValue() + " Label candidate : " + this.getLabel();
     }
 }
