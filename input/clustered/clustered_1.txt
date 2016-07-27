@@ -1,2 +1,0 @@
-list candidate : [4.5, 3.2][5.0, 2.0][5.7, 4.0] ;Label of cluster : 1
-list candidate : [3.0, 3.0] ;Label of cluster : 0

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by trong_000 on 6/29/2016.
  */
-public class Candidate {
+public class Candidate implements Cloneable {
     private List<Double> value_;
     private List <Double> listLabels_;
     private int label_;
@@ -64,5 +64,8 @@ public class Candidate {
 
     public String valueToString () {
         return  "List data : "+ this.getValue() + " Label candidate : " + this.getLabel();
+    }
+    public Candidate clone()throws CloneNotSupportedException{
+        return (Candidate)super.clone();
     }
 }

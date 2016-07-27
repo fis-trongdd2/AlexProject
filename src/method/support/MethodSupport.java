@@ -96,7 +96,7 @@ public class MethodSupport {
         Distance test = new Distance();
 
         //chi de tao dl khoang cach lan dau tien. tu lan sau doc file ra .
-        test.setMapDistancesSorted(listCluster);
+        //test.setMapDistancesSorted(listCluster);
         //lay map ra.doc tu file
         Map<Point,Double> map = test.getMapDistances();
         //System.out.println("size on main "+ map.size());
@@ -115,21 +115,21 @@ public class MethodSupport {
                 //System.out.println("bang nhau");
                 listCluster.get(saveIndex.getA()).joinCluster(listCluster.get(saveIndex.getB()));
                 listCluster.remove(saveIndex.getB());
-                //System.out.println("gop "+ saveIndex.getA() + "voi " + saveIndex.getB());
+                System.out.println(saveIndex.getA() + " join with " + saveIndex.getB()+";");
                 map = updateDistance(listCluster, map, saveIndex.getA(), saveIndex.getB());
                 phanbiet.clear();
             } else {
                 //System.out.println("khac");
                 if (listCluster.get(saveIndex.getA()).getLabelOfCluster() == 0) {
                     listCluster.get(saveIndex.getB()).joinCluster(listCluster.get(saveIndex.getA()));
-                    //System.out.println("gop "+ saveIndex.getA() + "voi " + saveIndex.getB());
+                    System.out.println(saveIndex.getA() + " join with " + saveIndex.getB()+";");
                     listCluster.remove(saveIndex.getA());
                     map = updateDistance(listCluster, map, saveIndex.getB(), saveIndex.getA());
                     phanbiet.clear();
                 } else {
                     if (listCluster.get(saveIndex.getB()).getLabelOfCluster() == 0) {
                         listCluster.get(saveIndex.getA()).joinCluster(listCluster.get(saveIndex.getB()));
-                        //System.out.println("gop "+ saveIndex.getA() + "voi " + saveIndex.getB());
+                        System.out.println(saveIndex.getA() + " join with " + saveIndex.getB()+";");
                         listCluster.remove(saveIndex.getB());
                         map = updateDistance(listCluster, map, saveIndex.getA(), saveIndex.getB());
                         phanbiet.clear();
@@ -142,6 +142,7 @@ public class MethodSupport {
 
             }
         }
+        System.out.println();
         return listCluster;
     }
 
@@ -161,15 +162,15 @@ public class MethodSupport {
                     index = j;
                 }
             }
-            newList.get(i).setLabel(index+1);
+            newList.get(i).setLabel(listClustered.get(index).getLabelOfCluster());
         }
         return newList;
     }
 
     //tra ve % do chinh xac cua thuat toan phan cum doi voi list test
     public static String assessClustering (List<Candidate> listOld, List<Candidate> listNew) {
-        int dem = 0;
-        int length = listOld.size();
+        double dem = 0;
+        double length = listOld.size();
         for (int i = 0; i < length; i++) {
             if (listOld.get(i).getLabel() == listNew.get(i).getLabel()) {
                 dem++;
@@ -185,7 +186,9 @@ public class MethodSupport {
         a.add(2);
         a.add(8);
         a= a.subList(1,3);
-        System.out.print(a);
+        double dem = 2;
+        double length =4;
+        System.out.print(new DecimalFormat("##.##").format(dem/length*100) + "%");
 
     }
 }
