@@ -1,0 +1,1 @@
+list candidate : [4.5, 3.2] ;Label of cluster : 1

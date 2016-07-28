@@ -19,6 +19,7 @@ public class Main {
         for ( i = 0; i < nTrain; i++) {
             listCandidateTrains.add(listCandidatesLabel.get(i));
         }
+        System.out.println(listCandidateTrains.size());
 
         //tao list test: co y phan tu
         System.out.println("--------------Initializing_listCandidateTests------------------------");
@@ -26,7 +27,7 @@ public class Main {
         for ( i = nTrain; i < listCandidatesLabel.size(); i++) {
             listCandidateTests.add(listCandidatesLabel.get(i));
         }
-
+        System.out.println(listCandidatesLabel.size());
 
         System.out.println("--------------CLUSTERING---------------------------------------------");
         //them list train vao khoi tao.
@@ -56,6 +57,7 @@ public class Main {
         //gan nhan cho tap ko nhan, mk dua vao input la so unlabel muon gan : 40 60 80
         System.out.println("-------------------setLabelForUnlabel--------------------------------");
         listCandidatesUnlabel = MethodSupport.setLabelForUnlabel(listCandidatesUnlabel, listClusterTrains, 60);
+        System.out.println(listCandidatesUnlabel.size());
         System.out.println("-------------------WRITE_TO_Unlabel----------------------------------");
         WritingFile.writeCandidatesToFile(listCandidatesUnlabel,"unlabeled");
 

@@ -17,7 +17,7 @@ public class WritingFile {
 
     //ghi cluster ra file trong input/clustered
     public static void writeClustersToFile (List<Cluster> clusters) {
-        String a ="_1";
+        String a ="1";
         File f = new File("input/clustered/clustered_"+a+".txt");
 
         int i = 0;
