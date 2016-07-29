@@ -9,9 +9,8 @@ import java.util.*;
  */
 public class Main {
 
-    public static void RUN (List<Candidate> listCandidatesLabel, List<Candidate> listCandidatesUnlabel, int x) {
+    public static void RUN (List<Candidate> listCandidatesLabel, List<Candidate> listCandidatesUnlabel, int nTrain) {
         int i;
-        int nTrain = x*listCandidatesLabel.size()/40;
 
         //tao list train: co x phan tu
         System.out.println("--------------Initializing_listCandidateTrains-----------------------");
@@ -23,11 +22,8 @@ public class Main {
 
         //tao list test: co y phan tu
         System.out.println("--------------Initializing_listCandidateTests------------------------");
-        List<Candidate> listCandidateTests = new ArrayList<Candidate>();
-        for ( i = nTrain; i < listCandidatesLabel.size(); i++) {
-            listCandidateTests.add(listCandidatesLabel.get(i));
-        }
-        System.out.println(listCandidatesLabel.size());
+        List<Candidate> listCandidateTests =  MethodSupport.setCluster("input/5/test_5.arff","input/nhan.xml");;
+        System.out.println(listCandidateTests.size());
 
         System.out.println("--------------CLUSTERING---------------------------------------------");
         //them list train vao khoi tao.
@@ -68,16 +64,17 @@ public class Main {
 
 
         System.out.println("--------------Initializing_list_candidate_LABEL ---------------------");
-//        ArrayList<Candidate> listCandidatesLabel = MethodSupport.setCluster("input/example.arff","input/nhanexample.xml");
-        ArrayList<Candidate> listCandidatesLabel = MethodSupport.setCluster("input/label2000_5.arff","input/nhan.xml");
+
+        ArrayList<Candidate> listCandidatesLabel = MethodSupport.setCluster("input/5/train_5.arff","input/nhan.xml");
 
         System.out.println("--------------Initializing_list_candidate_UNLABEL--------------------");
-//        ArrayList<Candidate> listCandidatesUnlabel = MethodSupport.setCluster("input/exampleunlabel.arff","input/nhanexampletrong.xml");;
-        ArrayList<Candidate> listCandidatesUnlabel = MethodSupport.setCluster("input/unlabeled5.arff","input/nhanexampletrong.xml");;
+
+        ArrayList<Candidate> listCandidatesUnlabel = MethodSupport.setCluster("input/5/unlabeled5.arff","input/nhanexampletrong.xml");;
 
 
         System.out.println("-------------------RUNNING-------------------------------------------");
-        RUN(listCandidatesLabel,listCandidatesUnlabel,1);
+
+        RUN(listCandidatesLabel,listCandidatesUnlabel,50);
 
 
         System.out.println("---------------------END---------------------------------------------");
