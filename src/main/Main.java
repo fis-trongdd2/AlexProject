@@ -22,7 +22,15 @@ public class Main {
 
         //tao list test: co y phan tu
         System.out.println("--------------Initializing_listCandidateTests------------------------");
-        List<Candidate> listCandidateTests =  MethodSupport.setCluster("input/5/test_5.arff","input/nhan.xml");;
+        List<Candidate> listCandidateTestsfull =  MethodSupport.setCluster("input/5/test_5.arff","input/nhan.xml");;
+        List<Candidate> listCandidateTests = new ArrayList<Candidate>();
+        for (i = 0; i < 50; i++) {
+            try {
+                listCandidateTests.add(listCandidateTestsfull.get(i).clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
         System.out.println(listCandidateTests.size());
 
         System.out.println("--------------CLUSTERING---------------------------------------------");
@@ -34,7 +42,7 @@ public class Main {
 
 
         //gan nhan cho tap test
-        System.out.println("-------------------setLabelForTEST-----------------------------------");
+         System.out.println("-------------------setLabelForTEST-----------------------------------");
         List<Candidate> listCandidateTestsToLabel = new ArrayList<Candidate>();
         for (Candidate c :listCandidateTests) {
             try {
@@ -74,7 +82,7 @@ public class Main {
 
         System.out.println("-------------------RUNNING-------------------------------------------");
 
-        RUN(listCandidatesLabel,listCandidatesUnlabel,50);
+        RUN(listCandidatesLabel,listCandidatesUnlabel,200);
 
 
         System.out.println("---------------------END---------------------------------------------");
