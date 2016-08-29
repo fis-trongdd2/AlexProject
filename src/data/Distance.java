@@ -43,7 +43,6 @@ public class Distance {
         }
         distances_ = new LinkedHashMap<Point, Double>();
         distances_ = sortByComparator(nDistances_);
-        System.out.println("size after set" + distances_.size());
         return distances_;
     }
     //them cac gia tri vao map nay. dong thoi ghi ra file input/distance
@@ -84,7 +83,8 @@ public class Distance {
         }
     }
 
-    public static Map updateDistance (List<Cluster> clusters, Map map, int x, int y) {
+    @SuppressWarnings("unchecked")
+	public static Map updateDistance (List<Cluster> clusters, Map map, int x, int y) {
         List<Map.Entry<Point,Double>> list =
                 new LinkedList<Map.Entry<Point,Double>>(map.entrySet());
         for (Iterator<Map.Entry<Point,Double>> it = list.iterator(); it.hasNext();) {

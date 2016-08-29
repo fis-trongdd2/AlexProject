@@ -71,8 +71,4 @@ public class ARFF {
         return nCadidateFirst_;
     }
 
-
-    public static void main(String []args) {
-        ARFF test = new ARFF("input/label5.arff");
-    }
 }

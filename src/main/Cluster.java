@@ -81,6 +81,12 @@ public class Cluster {
         a = a + " ;Label of cluster : " + this.getLabelOfCluster();
         return a;
     }
+    
+
+	public Cluster clone()throws CloneNotSupportedException{
+        return (Cluster)super.clone();
+    }
+    
     public static void main(String []args) {
 
     }

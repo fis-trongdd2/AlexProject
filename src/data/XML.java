@@ -22,7 +22,7 @@ import java.util.Scanner;
  */
 public class XML {
     private int nLabel_;
-    private ArrayList<ArrayList<Double>> listCombinations_;
+    private ArrayList<ArrayList<Integer>> listCombinations_;
 
     public XML(String linkXML) {
 
@@ -74,22 +74,22 @@ public class XML {
         }
 
         //doc file nhan.txt, lay ra list to hop nhom : dstohop
-        listCombinations_ = new ArrayList<ArrayList<Double>>();
+        listCombinations_ = new ArrayList<ArrayList<Integer>>();
         Path filePath = Paths.get("input/nhan.txt");
         Scanner scanner = null;
-        ArrayList<Double> con = new ArrayList<Double>();
+        ArrayList<Integer> con = new ArrayList<Integer>();
         int a = this.getNumberOfLabel();
         try {
             scanner = new Scanner(filePath);
             int j = 0;
             while (scanner.hasNext()) {
-                if (scanner.hasNextDouble()) {
-                    double q = scanner.nextDouble();
+                if (scanner.hasNextInt()) {
+                    int q = scanner.nextInt();
                     con.add(q);
                     j++;
                     if (j >= a) {
                         listCombinations_.add(con);
-                        con = new ArrayList<Double>();
+                        con = new ArrayList<Integer>();
                         j = 0;
                     }
                 }
@@ -104,7 +104,7 @@ public class XML {
         return nLabel_;
     }
 
-    public ArrayList<ArrayList<Double>> getListCombination() {
+    public ArrayList<ArrayList<Integer>> getListCombination() {
         return listCombinations_;
     }
 

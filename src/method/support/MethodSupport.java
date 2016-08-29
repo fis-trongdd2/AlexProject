@@ -21,9 +21,11 @@ import static data.Distance.updateDistance;
  * class nay dinh nghia cac phuong thuc static ho tro thuc hien thuat thoan trong ham main
  */
 public class MethodSupport {
-
+	public static final String LABEL = "LABEL";
+	public static final String ADDLABEL = "ADDLABEL";
+	
     // doc file .arff va .xml dua ra danh sach the hien va nhan tuong ung
-    public static ArrayList<Candidate> setCluster (String linkArff, String linkXML) {
+    public static ArrayList<Candidate> setCandidate (String linkArff, String linkXML) {
         //ArrayList<Cluster> listCluster = new ArrayList<Cluster>();
         ArrayList<Candidate> listCandidateFirst = new ArrayList<Candidate>();
         ARFF filearff = new ARFF(linkArff);
@@ -45,13 +47,14 @@ public class MethodSupport {
 
         //vong for nay lay cac nhan dua vao ds nhan cua tung the hien.
         for ( i = 0; i < filearff.getNumberOfCadidateFirst(); i++) {
-            ArrayList<Double> _ds2 = new ArrayList<Double>();
+            ArrayList<Integer> _ds2 = new ArrayList<Integer>();
             for ( j = filearff.getListAtribute().size() - numberOfLabel; j < filearff.getListAtribute().size(); j++ ) {
-                _ds2.add(filearff.getListValue().get(j).get(i));
+                _ds2.add(filearff.getListValue().get(j).get(i).intValue());
             }
-            listCandidateFirst.get(i).setListLabel(_ds2);
+            listCandidateFirst.get(i).setListValueLabel(_ds2);
+            listCandidateFirst.get(i).setListSeqLabel(_ds2); 
         }
-
+ 
         //vong for nay dua cac to hop trong file tohopnhom vao 1 list. tu list nay se xac dinh nhom moi cua cac cum.
         //xac dinh cac nhan moi cua cac cum. tuong ung voi danh sach tohopnhom lay ra o tren.
         for (Candidate c : listCandidateFirst) {
@@ -63,13 +66,17 @@ public class MethodSupport {
 
 
     //phuong thuc static gan moi the hien vao 1 cum : phuong thuc nay dung de khoi tao.
-    public static List<Cluster> setListClusters (List <Candidate> candidates) {
+    public static List<Cluster> setListClusters (List <Candidate> candidates, String type) {
 
         List<Cluster> listClusters = new ArrayList<Cluster>();
         for (Candidate c : candidates) {
             Cluster cluster = new Cluster();
             cluster.addCandidate(c);
-            cluster.setLabelOfCluster(c.getLabel());
+            if (type == LABEL) {
+            	cluster.setLabelOfCluster(c.getLabel());
+            } else {
+            	cluster.setLabelOfCluster(c.getLabelAdd());;
+            }
             listClusters.add(cluster);
         }
         return listClusters;
@@ -96,7 +103,7 @@ public class MethodSupport {
         Distance test = new Distance();
 
         //chi de tao dl khoang cach lan dau tien. tu lan sau doc file ra .
-        //test.setMapDistancesSorted(listCluster);
+       	test.setMapDistancesSorted(listCluster);
         //lay map ra.doc tu file
         Map<Point,Double> map = test.getMapDistances();
         //System.out.println("size on main "+ map.size());
@@ -142,7 +149,6 @@ public class MethodSupport {
 
             }
         }
-        System.out.println();
         return listCluster;
     }
 

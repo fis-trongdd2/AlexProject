@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Created by trong_000 on 6/29/2016.
  */
-public class Main {
+public class LiftProject {
 
     public static void RUN (List<Candidate> listCandidatesLabel, List<Candidate> listCandidatesUnlabel, int nTrain) {
         int i;
@@ -22,9 +22,9 @@ public class Main {
 
         //tao list test: co y phan tu
         System.out.println("--------------Initializing_listCandidateTests------------------------");
-        List<Candidate> listCandidateTestsfull =  MethodSupport.setCluster("input/5/test_5.arff","input/nhan.xml");;
+        List<Candidate> listCandidateTestsfull =  MethodSupport.setCandidate("input/example.arff","input/nhanexample.xml");;
         List<Candidate> listCandidateTests = new ArrayList<Candidate>();
-        for (i = 0; i < 50; i++) {
+        for (i = 0; i < 12; i++) {
             try {
                 listCandidateTests.add(listCandidateTestsfull.get(i).clone());
             } catch (CloneNotSupportedException e) {
@@ -35,7 +35,7 @@ public class Main {
 
         System.out.println("--------------CLUSTERING---------------------------------------------");
         //them list train vao khoi tao.
-        List<Cluster> listClusterTrains = MethodSupport.setListClusters(listCandidateTrains);
+        List<Cluster> listClusterTrains = MethodSupport.setListClusters(listCandidateTrains,MethodSupport.LABEL);
         //phan cum : dua vao list cu tra ve list moi
         listClusterTrains = MethodSupport.clustering(listClusterTrains);
         WritingFile.writeClustersToFile(listClusterTrains);
@@ -60,7 +60,7 @@ public class Main {
 
         //gan nhan cho tap ko nhan, mk dua vao input la so unlabel muon gan : 40 60 80
         System.out.println("-------------------setLabelForUnlabel--------------------------------");
-        listCandidatesUnlabel = MethodSupport.setLabelForUnlabel(listCandidatesUnlabel, listClusterTrains, 60);
+        listCandidatesUnlabel = MethodSupport.setLabelForUnlabel(listCandidatesUnlabel, listClusterTrains, -1);
         System.out.println(listCandidatesUnlabel.size());
         System.out.println("-------------------WRITE_TO_Unlabel----------------------------------");
         WritingFile.writeCandidatesToFile(listCandidatesUnlabel,"unlabeled");
@@ -73,16 +73,18 @@ public class Main {
 
         System.out.println("--------------Initializing_list_candidate_LABEL ---------------------");
 
-        ArrayList<Candidate> listCandidatesLabel = MethodSupport.setCluster("input/5/train_5.arff","input/nhan.xml");
+//        ArrayList<Candidate> listCandidatesLabel = MethodSupport.setCluster("input/5/train_5.arff","input/nhan.xml");
+        ArrayList<Candidate> listCandidatesLabel = MethodSupport.setCandidate ("input/example.arff","input/nhanexample.xml");
 
         System.out.println("--------------Initializing_list_candidate_UNLABEL--------------------");
 
-        ArrayList<Candidate> listCandidatesUnlabel = MethodSupport.setCluster("input/5/unlabeled5.arff","input/nhanexampletrong.xml");;
+//        ArrayList<Candidate> listCandidatesUnlabel = MethodSupport.setCluster("input/5/unlabeled5.arff","input/nhanexampletrong.xml");;
+        ArrayList<Candidate> listCandidatesUnlabel = MethodSupport.setCandidate("input/exampleunlabel.arff","input/nhanexampletrong.xml");;
 
 
         System.out.println("-------------------RUNNING-------------------------------------------");
 
-        RUN(listCandidatesLabel,listCandidatesUnlabel,200);
+        RUN(listCandidatesLabel,listCandidatesUnlabel,12);
 
 
         System.out.println("---------------------END---------------------------------------------");
