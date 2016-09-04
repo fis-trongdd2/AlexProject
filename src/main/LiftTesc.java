@@ -2,13 +2,13 @@ package main;
 import method.support.LTSupport;
 import method.support.MethodSupport;
 
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;;
+import java.util.Set;
+
 public class LiftTesc {
 	public static List<Cluster> listCluster = new ArrayList<>();
 	public static String pnameD0 = new String("D");
@@ -55,11 +55,6 @@ public class LiftTesc {
 				else
 					nameD.get(pnameD2).addAll(c.getListCandidate());
 			}
-		}
-		if ( nameD.get(pnameD0).size() == 0 && 
-				nameD.get(pnameD1).size() == 0 && 
-				nameD.get(pnameD2).size() == 0) {
-			return;
 		}
 		pL1 += "1";
 		pL2 += "2";
@@ -109,6 +104,10 @@ public class LiftTesc {
 				LiftTescAlgorithm(nameD.get(pnameD2),nameL.get(pL1),nameL.get(pL2));
 			}
 		}
+		if (nameD.size() == 0) {
+			return;
+		}
+
 	}
 	public static void main (String[] args) {
 		List<Candidate> example = MethodSupport.setCandidate ("input/ltexamplearff.arff","input/ltnhanexample.xml");
