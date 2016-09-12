@@ -6,15 +6,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Test {
-	private static String plusTuThang(String tuThang) {
-		if (tuThang.substring(4, 6).equals("12")) {
-			tuThang = String.valueOf(Integer.parseInt(tuThang) + 89);
-		} else {
-			tuThang = String.valueOf(Integer.parseInt(tuThang) + 1);
-		}
-		return tuThang;
-	}
 	public static void main (String []args) {
-		System.out.println(plusTuThang("299912"));
+		String str1 = "0:1".substring(0, 1);
+		String str2 = "0:1".substring(2);
+		System.out.println(str1);
+		System.out.println(str2);
 	}
 }

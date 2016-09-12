@@ -94,10 +94,10 @@ public class Candidate implements Cloneable {
 			if (temp.size() == lamda.size()) 
 				t = 1;
 			else t = 2;
-			this.setLabelAdd(t);
+			this.labelAdd = t;
 		}
 		else {
-			this.setLabelAdd(3);
+			this.labelAdd = 3;
 		}
 	}
 	
