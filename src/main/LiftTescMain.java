@@ -7,9 +7,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import data.WritingFile;
 import method.support.LTSupport;
 import method.support.MethodSupport;
 
@@ -19,9 +21,9 @@ public class LiftTescMain {
 	public static void main (String []args) throws CloneNotSupportedException {
 		
 //		List<Candidate> example = MethodSupport.setCandidate ("input/ltexamplearff.arff","input/ltnhanexample.xml");
-		List<Candidate> example = MethodSupport.setCandidate ("input/5/train5.arff","input/nhan.xml");
+		List<Candidate> example = MethodSupport.setCandidate ("input/5/5.valid.arff","input/nhan.xml");
         List<Candidate> listCandidateTrains = new ArrayList<Candidate>();
-        for (int  i = 0; i < 50; i++) {
+        for (int  i = 0; i < 300; i++) {
             listCandidateTrains.add(example.get(i).clone());
         }
 		Set<Integer> l1 = new HashSet<>();
@@ -29,8 +31,11 @@ public class LiftTescMain {
 		l2.add(1);
 		l2.add(2);
 		l2.add(3);
+		l2.add(4);
+		l2.add(5);
+		System.out.println(listCandidateTrains.size());
 		List <LTObject> listObject= new ArrayList<>();
-		listObject.add(new LTObject(example,l1,l2,new ArrayList<>()));
+		listObject.add(new LTObject(listCandidateTrains,l1,l2,new ArrayList<>()));
 		List<Candidate> dl = new ArrayList<>();
 		List<Candidate> du = new ArrayList<>();
 		List<Candidate> d0 = new ArrayList<>();
@@ -39,6 +44,8 @@ public class LiftTescMain {
 		int i;
 			
 		for (i = 0; i < listObject.size(); i++) {
+			if (listObject.get(i) == null) continue;
+			System.out.println( "size :" + listObject.size());
 			dl = new ArrayList<>();
 			du = new ArrayList<>();
 			for (Candidate c : listObject.get(i).get_listCandidate()) {
@@ -49,7 +56,13 @@ public class LiftTescMain {
 					dl.add(c.clone());
 				}
 			}
-			int t = LTSupport.findLamda(listObject.get(i).get_listCandidate(), listObject.get(i).getL2());
+			int t = -1;
+			try {
+				t = LTSupport.findLamda(listObject.get(i).get_listCandidate(), listObject.get(i).getL2());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 			listObject.get(i).getLamda().add(t);
 			for (Candidate c :  dl) {
 				c.divideToSet(listObject.get(i).getLamda());
@@ -86,19 +99,21 @@ public class LiftTescMain {
 				}
 			}
 			if (d0.size() != 0) {
-				List<Cluster> clusterD0 = MethodSupport.setListClusters(d0, MethodSupport.ADDLABEL);
+				List<Cluster> clusterD0 = MethodSupport.setListClusters(d0, MethodSupport.LABEL);
 				clusterD0 = MethodSupport.clustering(clusterD0);
 				for (Cluster c : clusterD0) {
 					listCluster.add(c);			
 				}
+				System.out.println("ko add");
 			}
+			LTObject objectToAdd = new LTObject();
 			Set<Integer> nList2 = listObject.get(i).getL2().stream().map(Integer::new).collect(Collectors.toSet());
 			nList2.remove(t);
 			Set<Integer> nList1 = listObject.get(i).getL1().stream().map(Integer::new).collect(Collectors.toSet());
 			Set<Integer> nListClone = listObject.get(i).getL1().stream().map(Integer::new).collect(Collectors.toSet());
 			if (d1.size() != 0) {
 				if (LTSupport.checkLabel(d1)) {
-					List<Cluster> clusterD1 = MethodSupport.setListClusters(d1, MethodSupport.ADDLABEL);
+					List<Cluster> clusterD1 = MethodSupport.setListClusters(d1, MethodSupport.LABEL);
 					clusterD1 = MethodSupport.clustering(clusterD1);
 					for (Cluster c : clusterD1) {
 						listCluster.add(c);	
@@ -106,45 +121,62 @@ public class LiftTescMain {
 				}
 				else {
 					nList1.add(t);
-					listObject.add(new LTObject(d1, nList1,nList2,listObject.get(i).getLamda()));
+					objectToAdd = new LTObject(d1, nList1,nList2,listObject.get(i).getLamda());
+					if (Objects.nonNull(objectToAdd))
+						listObject.add(objectToAdd);
+					System.out.println(" add 1");
 				}
 			}
 			if (d2.size() != 0) {
 				if (LTSupport.checkLabel(d2)) {
-					List<Cluster> clusterD2 = MethodSupport.setListClusters(d2, MethodSupport.ADDLABEL);
+					List<Cluster> clusterD2 = MethodSupport.setListClusters(d2, MethodSupport.LABEL);
 					clusterD2 = MethodSupport.clustering(clusterD2);
 					for (Cluster c : clusterD2) {
 						listCluster.add(c);			
 					}
 				}		
 				else {
-					listObject.add(new LTObject(d2 , nListClone,nList2,new ArrayList<>()));
+					objectToAdd = new LTObject(d2 , nListClone,nList2,new ArrayList<>());
+					if (Objects.nonNull(objectToAdd))
+						listObject.add(objectToAdd);
+					System.out.println(" add 2");
+
 				}
 			}
 			listObject.remove(i);
 			i--;
+			System.out.println("done");
 		}
-//        List<Candidate> listCandidateTests = new ArrayList<Candidate>();
-//        for (i = 80; i < 120; i++) {
-//            try {
-//                listCandidateTests.add(example.get(i).clone());
-//            } catch (CloneNotSupportedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        List<Candidate> listCandidateTestsToLabel = new ArrayList<Candidate>();
-//        for (Candidate c :listCandidateTests) {
-//            try {
-//                listCandidateTestsToLabel.add(c.clone());
-//            } catch (CloneNotSupportedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        listCandidateTestsToLabel = MethodSupport.setLabelForUnlabel(listCandidateTestsToLabel,listCluster,-1);
-//        System.out.println(MethodSupport.assessClustering(listCandidateTestsToLabel,listCandidateTests));
-		for (Cluster c: listCluster) {
-			System.out.println(c.getListCandidateSize()+ " " + c.getLabelOfCluster());
-		}
+        List<Candidate> listCandidateTests = new ArrayList<Candidate>();
+        for (i = 300; i < 400; i++) {
+            try {
+                listCandidateTests.add(example.get(i).clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+        List<Candidate> listCandidateTestsToLabel = new ArrayList<Candidate>();
+        for (Candidate c :listCandidateTests) {
+            try {
+                listCandidateTestsToLabel.add(c.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        listCandidateTestsToLabel = MethodSupport.setLabelForUnlabel(listCandidateTestsToLabel,listCluster,-1);
+        System.out.println(MethodSupport.assessClustering(listCandidateTestsToLabel,listCandidateTests));
+        
+        
+        List<Candidate> listCandidatesUnlabel = new ArrayList<Candidate>();
+        for (i = 400; i < 500; i++) {
+            try {
+            	listCandidatesUnlabel.add(example.get(i).clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+        listCandidatesUnlabel = MethodSupport.setLabelForUnlabel(listCandidatesUnlabel, listCluster, -1);
+        WritingFile.writeCandidatesToFile(listCandidatesUnlabel,"unlabeled");
 	}
 }

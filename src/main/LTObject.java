@@ -35,6 +35,10 @@ public class LTObject {
 	}
 	
 
+	public LTObject() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setLTObject(List<Candidate> _listCandidate,Set<Integer> l1,Set<Integer> l2) {
 		this._listCandidate = _listCandidate;
 		this.l1 = l1;

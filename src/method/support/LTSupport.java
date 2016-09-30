@@ -67,7 +67,7 @@ public class LTSupport {
 		int length = listC.size();
 		for (int i = 0; i < length; i++) {
 			for (int j = i+1; j < length; j++) {
-				if (listC.get(i).getListSeqLabel().equals(listC.get(j).getListSeqLabel())) {
+				if (!listC.get(i).getListSeqLabel().equals(listC.get(j).getListSeqLabel())) {
 					return false;
 				}
 			}
@@ -75,4 +75,16 @@ public class LTSupport {
 		return true;
 	}
 	
+	public static void main (String []args) {
+		List <Integer> a =new ArrayList<>();
+		a.add(1);		
+		a.add(2);
+		a.add(1);
+
+		List <Integer> b =new ArrayList<>();
+		b.add(1);
+		b.add(2);
+		b.add(1);
+		System.out.println(a.equals(b));
+	}
 }

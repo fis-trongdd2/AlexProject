@@ -37,6 +37,21 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
+	public static void writeToFileUtf8Buffer (String link,String  listData) {
+		try {
+		File file = new File(link);
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		BufferedWriter bw =  new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(file), "UTF8"));
+			bw.write(listData );
+		bw.close();
+		System.out.println("Done");
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+}
 	public static Map<String,Integer> compute (List<String> words,String dl) {
 		int count;
 		Map<String, Integer> result = new HashMap <>();
