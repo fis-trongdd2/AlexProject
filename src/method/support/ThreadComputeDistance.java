@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Candidate;
 import main.Cluster;
 
 class ThreadDistance implements Runnable {
@@ -24,6 +25,7 @@ class ThreadDistance implements Runnable {
 	public void run() {
 		int j;
 		int i;
+	    System.out.println("Starting " +  threadName );
 
 		File file = new File("input/distance.txt");
 		if (!file.exists()) {
@@ -62,6 +64,7 @@ class ThreadDistance implements Runnable {
 	        }
 	}
 	public void start () {
+	    System.out.println("Starting " +  threadName );
 		if (t == null) {
 			t = new Thread (this, threadName);
 			t.start ();
@@ -69,9 +72,14 @@ class ThreadDistance implements Runnable {
 	}
 }
 public class ThreadComputeDistance {
-	public static void main(String args[]) {
-		List<Cluster> a = new ArrayList<Cluster>();
-		
+	public static void main(String args[]) throws CloneNotSupportedException {
+		ArrayList<Candidate> candidate = MethodSupport.setCandidate ("input/5/5.valid.arff","input/nhan.xml");
+        List<Candidate> candidate300 = new ArrayList<>();
+        
+        for (int  i = 0; i < 300; i++) {
+        	candidate300.add(candidate.get(i).clone());
+        }
+        List<Cluster> a = MethodSupport.setListClusters(candidate,MethodSupport.LABEL);
 		ThreadDistance R1 = new ThreadDistance( "Thread-1",0,a.size()/4,a);
 		R1.start();
 		ThreadDistance R2 = new ThreadDistance( "Thread-2",a.size()/4,a.size()/2,a);
