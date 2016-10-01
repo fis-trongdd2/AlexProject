@@ -1,19 +1,23 @@
 package method.support;
 
-import data.ARFF;
-import data.Distance;
-import data.XML;
-import main.Candidate;
-import main.Cluster;
-import main.Point;
+import static data.Distance.updateDistance;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static data.Distance.updateDistance;
+import data.ARFF;
+import data.Distance;
+import data.XML;
+import main.Candidate;
+import main.Cluster;
+import main.Point;
 
 /**
  * Created by trong_000 on 7/23/2016.
@@ -184,17 +188,36 @@ public class MethodSupport {
         }
         return new DecimalFormat("##.##").format(dem/length*100) + "%";
     }
-    public static void main(String [] args) {
-        List<Integer> a = new ArrayList<Integer>();
-        a.add(1);
-        a.add(3);
-        a.add(5);
-        a.add(2);
-        a.add(8);
-        a= a.subList(1,3);
-        double dem = 2;
-        double length =4;
-        System.out.print(new DecimalFormat("##.##").format(dem/length*100) + "%");
-
+    public static void runThreadDistance (List<Cluster> a) throws IOException, InterruptedException {
+    	File file = new File("input/distance.txt");
+    	if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+	                e.printStackTrace();
+			}
+		}
+    	FileWriter fwOb = new FileWriter("input/distance.txt", false); 
+    	PrintWriter pwOb = new PrintWriter(fwOb, false);
+    	pwOb.flush();
+    	pwOb.close();
+    	fwOb.close();
+		ThreadDistance R1 = new ThreadDistance( "Thread-1",0,a.size()/4,a);
+		Thread tr1 = new Thread(R1);
+		tr1.start();
+		ThreadDistance R2 = new ThreadDistance( "Thread-2",a.size()/4,a.size()/2,a);
+		Thread tr2 = new Thread(R2);
+		tr2.start();
+		ThreadDistance R3 = new ThreadDistance( "Thread-3",a.size()/2,a.size()/4*3,a);
+		Thread tr3 = new Thread(R3);
+		tr3.start();
+		ThreadDistance R4 = new ThreadDistance( "Thread-4",a.size()/4*3,a.size(),a);
+		Thread tr4 = new Thread(R4);
+		tr4.start();
+		tr1.join();
+		tr2.join();
+		tr3.join();
+		tr4.join();
+		
     }
 }

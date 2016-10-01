@@ -23,7 +23,7 @@ public class LiftTescRun {
 //		List<Candidate> example = MethodSupport.setCandidate ("input/ltexamplearff.arff","input/ltnhanexample.xml");
 		List<Candidate> example = MethodSupport.setCandidate ("input/5/5.valid.arff","input/nhan.xml");
         List<Candidate> listCandidateTrains = new ArrayList<Candidate>();
-        for (int  i = 0; i < 700; i++) {
+        for (int  i = 0; i < 1000; i++) {
             listCandidateTrains.add(example.get(i).clone());
         }
 		Set<Integer> l1 = new HashSet<>();
@@ -125,7 +125,7 @@ public class LiftTescRun {
 			System.out.println("done");
 		}
         List<Candidate> listCandidateTests = new ArrayList<Candidate>();
-        for (i = 700; i < 800; i++) {
+        for (i = 1000; i < 1250; i++) {
             try {
                 listCandidateTests.add(example.get(i).clone());
             } catch (CloneNotSupportedException e) {

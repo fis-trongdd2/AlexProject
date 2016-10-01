@@ -1,15 +1,24 @@
 package data;
 
-import main.*;
-import main.Point;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+import main.Cluster;
+import main.Point;
+import method.support.MethodSupport;
 
 /**
  * Created by trong_000 on 7/19/2016.
@@ -47,40 +56,13 @@ public class Distance {
     }
     //them cac gia tri vao map nay. dong thoi ghi ra file input/distance
     public void setMapDistancesSorted (List<Cluster> listClusters){
-        int i,j;
-        File file = new File("input/distance.txt");
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(file.getAbsoluteFile());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        double d = 0;
-        BufferedWriter bw = new BufferedWriter(fw);
-        int count = 0;
-        try {
-            for (i = 0; i < listClusters.size(); i++) {
-                for (j = i + 1; j < listClusters.size(); j++) {
-                    d = listClusters.get(i).computeDistance(listClusters.get(j));
-                    bw.write(i + " " + j + " " + d +" ");
-                    count++;
-                    if (count == 10) {
-                        bw.newLine();
-                        count = 0;
-                    }
-                }
-            }
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    	 try {
+			MethodSupport.runThreadDistance(listClusters);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
     }
 
     @SuppressWarnings("unchecked")
