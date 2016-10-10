@@ -10,8 +10,18 @@ public class Cluster {
     private int labelOfCluster_;
     private List<Candidate> listCandidates_ = new ArrayList<Candidate>();
     private boolean identified_ = false;
+    private List<Integer> listSeqLabel = new ArrayList<>();
+    
 
-    public boolean getIdentified() {
+	public List<Integer> getListSeqLabel() {
+		return listSeqLabel;
+	}
+
+	public void setListSeqLabel(List<Integer> listSeqLabel) {
+		this.listSeqLabel = listSeqLabel;
+	}
+
+	public boolean getIdentified() {
         return identified_;
     }
 

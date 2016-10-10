@@ -46,7 +46,7 @@ public class Candidate implements Cloneable {
     }
 
     
-    public void setListValueLabel(ArrayList<Integer> listLabels) {
+    public void setListValueLabel(List<Integer> listLabels) {
         this.listValueLabels_ = listLabels;
     }
 
@@ -87,6 +87,11 @@ public class Candidate implements Cloneable {
 		temp = null;
 	}
 	
+
+	public void setListSeqLabel_(List<Integer> listSeqLabel_) {
+		this.listSeqLabel_ = listSeqLabel_;
+	}
+
 	public void divideToSet (List<Integer> lamda) {
 		List <Integer> temp = new ArrayList<>(this.getListSeqLabel()) ;
 		if (temp.containsAll(lamda)) {

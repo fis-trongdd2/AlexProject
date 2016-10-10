@@ -81,6 +81,7 @@ public class MethodSupport {
             } else {
             	cluster.setLabelOfCluster(c.getLabelAdd());;
             }
+            cluster.setListSeqLabel(c.getListSeqLabel());
             listClusters.add(cluster);
         }
         return listClusters;
@@ -173,12 +174,15 @@ public class MethodSupport {
                 }
             }
             newList.get(i).setLabel(listClustered.get(index).getLabelOfCluster());
+            newList.get(i).setListSeqLabel_(listClustered.get(index).getListSeqLabel());
+            System.out.println(listClustered.get(index).getListSeqLabel());
+
         }
         return newList;
     }
 
     //tra ve % do chinh xac cua thuat toan phan cum doi voi list test
-    public static String assessClustering (List<Candidate> listOld, List<Candidate> listNew) {
+    public static String assessClusteringCombination (List<Candidate> listOld, List<Candidate> listNew) {
         double dem = 0;
         double length = listOld.size();
         for (int i = 0; i < length; i++) {
@@ -188,6 +192,41 @@ public class MethodSupport {
         }
         return new DecimalFormat("##.##").format(dem/length*100) + "%";
     }
+    
+    //tra ve % do chinh xac cua thuat toan theo so th dung
+    public static String assessClusteringC1 (List<Candidate> listOld, List<Candidate> listNew) {
+        double dem = 0;
+        double total = 0;
+        double length = listOld.size();
+        for (int i = 0; i < length; i++) {
+    		total += listOld.get(i).getListSeqLabel().size();
+        	for (int j = 0; j < listOld.get(i).getListSeqLabel().size(); j++) {
+        		for (int k = 0; k < listNew.get(i).getListSeqLabel().size(); k++) {
+        			if (listOld.get(i).getListSeqLabel().get(j) == listNew.get(i).getListSeqLabel().get(k)) {
+        				dem++;
+        			}
+        		}
+        	}
+        }
+        return new DecimalFormat("##.##").format(dem/total*100) + "%";
+    } //tra ve % do chinh xac theo tung nhan
+//    public static Map<Integer,String> assessClusteringC2 (List<Candidate> listOld, List<Candidate> listNew) {
+//    	List <Integer> dem = new ArrayList<>();
+//    	List<Integer> total = new ArrayList<>();
+//        double length = listOld.size();
+//
+//        for (int i = 0; i < length; i++) {
+//        	for (int j = 0; j < listOld.get(i).getListValueLabel().size(); j++) {
+//        		for (int k = 0; k < listNew.get(i).getListValueLabel().size(); k++) {
+//        			if (listOld.get(i).getListValueLabel().get(j) == listOld.get(i).getListValueLabel().get(k)) {
+//        				dem++;
+//        			}
+//        		}
+//        	}        
+//        }
+//        return new DecimalFormat("##.##").format(dem/length*100) + "%";
+//    }
+//    
     public static void runThreadDistance (List<Cluster> a) throws IOException, InterruptedException {
     	File file = new File("input/distance.txt");
     	if (!file.exists()) {

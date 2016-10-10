@@ -142,8 +142,9 @@ public class LiftTescRun {
         }
 
         listCandidateTestsToLabel = MethodSupport.setLabelForUnlabel(listCandidateTestsToLabel,listCluster,-1);
-        System.out.println(MethodSupport.assessClustering(listCandidateTestsToLabel,listCandidateTests));
-//        
+        System.out.println(MethodSupport.assessClusteringCombination(listCandidateTests,listCandidateTestsToLabel)); 
+        System.out.println(MethodSupport.assessClusteringC1(listCandidateTests,listCandidateTestsToLabel));
+        //        
 //        
 //        List<Candidate> listCandidatesUnlabel = new ArrayList<Candidate>();
 //        for (i = 600; i < 700; i++) {

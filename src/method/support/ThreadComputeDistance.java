@@ -40,11 +40,17 @@ class ThreadDistance implements Runnable {
 	    
 		double d = 0;
 		BufferedWriter bw = new BufferedWriter(fw);
+		int count = 0;
 		try {
 			for (i = begin; i < end; i++) {
 				for (j = i + 1; j < listClusters.size(); j++) {
+					count++;
 					d = listClusters.get(i).computeDistance(listClusters.get(j));
-					bw.write(i + " " + j + " " + d +" ");
+					bw.write(" " + i + " " + j + " " + d);
+					if (count > 10) {
+						bw.newLine();
+						count = 0;
+					}
 				}
 			}
 			bw.close();
@@ -64,13 +70,19 @@ class ThreadDistance implements Runnable {
 		public static void main(String args[]) throws CloneNotSupportedException, IOException, InterruptedException {
 			List<Candidate> example = MethodSupport.setCandidate ("input/5/5.valid.arff","input/nhan.xml");
 	        List<Candidate> listCandidateTrains = new ArrayList<Candidate>();
-	        for (int  i = 0; i < 30; i++) {
+	        for (int  i = 0; i < 100; i++) {
 	            listCandidateTrains.add(example.get(i).clone());
 	        }
 	        List<Cluster> a = MethodSupport.setListClusters(listCandidateTrains,MethodSupport.LABEL);
 	        MethodSupport.runThreadDistance(a);
 			Distance test = new Distance();
-	        Map<Point,Double> map = test.getMapDistances();
+
+			Map<Point,Double> map = test.getMapDistances();
+	        for (Map.Entry<Point,Double> entry : map.entrySet()) {
+	            System.out.println("[A] : " + entry.getKey().getA()+ "[B]" + entry.getKey().getB()
+	                    + " [Value] : " + entry.getValue());
+	        }
+
 			System.out.println(map.size());
 		}   
 	}
