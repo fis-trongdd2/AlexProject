@@ -2,12 +2,10 @@ package method.support;
 
 import static data.Distance.updateDistance;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -110,7 +108,17 @@ public class MethodSupport {
         //chi de tao dl khoang cach lan dau tien. tu lan sau doc file ra .
        	test.setMapDistancesSorted(listCluster);
         //lay map ra.doc tu file
-        Map<Point,Double> map = test.getMapDistances();
+       	List <Map<Point,Double>> listMap = new ArrayList();
+       	listMap.add(test.getMapDistances("input/distance/distance1.txt"));
+       	listMap.add(test.getMapDistances("input/distance/distance2.txt"));
+       	listMap.add(test.getMapDistances("input/distance/distance3.txt"));
+       	listMap.add(test.getMapDistances("input/distance/distance4.txt"));
+        Map<Point,Double> map = new HashMap<>();
+        for (Map<Point,Double> temp : listMap) {
+        	for (Map.Entry<Point,Double> entry : temp.entrySet()) {
+        		map.put(entry.getKey(), entry.getValue());
+	        }
+        }
         //System.out.println("size on main "+ map.size());
 
         while (!checkFinish(listCluster)) {
@@ -175,8 +183,6 @@ public class MethodSupport {
             }
             newList.get(i).setLabel(listClustered.get(index).getLabelOfCluster());
             newList.get(i).setListSeqLabel_(listClustered.get(index).getListSeqLabel());
-            System.out.println(listClustered.get(index).getListSeqLabel());
-
         }
         return newList;
     }
@@ -228,29 +234,16 @@ public class MethodSupport {
 //    }
 //    
     public static void runThreadDistance (List<Cluster> a) throws IOException, InterruptedException {
-    	File file = new File("input/distance.txt");
-    	if (!file.exists()) {
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-	                e.printStackTrace();
-			}
-		}
-    	FileWriter fwOb = new FileWriter("input/distance.txt", false); 
-    	PrintWriter pwOb = new PrintWriter(fwOb, false);
-    	pwOb.flush();
-    	pwOb.close();
-    	fwOb.close();
-		ThreadDistance R1 = new ThreadDistance( "Thread-1",0,a.size()/4,a);
+		ThreadDistance R1 = new ThreadDistance( "Thread-1",0,a.size()/4,a,"input/distance/distance1.txt");
 		Thread tr1 = new Thread(R1);
 		tr1.start();
-		ThreadDistance R2 = new ThreadDistance( "Thread-2",a.size()/4,a.size()/2,a);
+		ThreadDistance R2 = new ThreadDistance( "Thread-2",a.size()/4,a.size()/2,a,"input/distance/distance2.txt");
 		Thread tr2 = new Thread(R2);
 		tr2.start();
-		ThreadDistance R3 = new ThreadDistance( "Thread-3",a.size()/2,a.size()/4*3,a);
+		ThreadDistance R3 = new ThreadDistance( "Thread-3",a.size()/2,a.size()/4*3,a,"input/distance/distance3.txt");
 		Thread tr3 = new Thread(R3);
 		tr3.start();
-		ThreadDistance R4 = new ThreadDistance( "Thread-4",a.size()/4*3,a.size(),a);
+		ThreadDistance R4 = new ThreadDistance( "Thread-4",a.size()/4*3,a.size(),a,"input/distance/distance4.txt");
 		Thread tr4 = new Thread(R4);
 		tr4.start();
 		tr1.join();

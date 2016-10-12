@@ -55,7 +55,7 @@ public class LiftProject {
         System.out.println("-------------------WRITE_TO_TEST-------------------------------------");
         WritingFile.writeCandidatesToFile(listCandidateTestsToLabel,"test");
         System.out.println("------------------------ASSESSING------------------------------------");
-        System.out.println(MethodSupport.assessClustering(listCandidateTestsToLabel,listCandidateTests));
+        System.out.println(MethodSupport.assessClusteringCombination(listCandidateTestsToLabel,listCandidateTests));
 
 
         //gan nhan cho tap ko nhan, mk dua vao input la so unlabel muon gan : 40 60 80

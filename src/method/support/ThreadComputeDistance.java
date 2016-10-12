@@ -20,20 +20,29 @@ class ThreadDistance implements Runnable {
 	List<Cluster> listClusters;
 	private int begin;
 	private int end;
-	private static final String fileDistance = "input/distance.txt";
-	ThreadDistance( String name,int begin,int end,List<Cluster> listClusters) {
+	private String linkFile;
+	ThreadDistance( String name,int begin,int end,List<Cluster> listClusters,String link) {
 		this.threadName = name;
 		this.begin = begin;
 		this.end = end;
 		this.listClusters = listClusters;
+		this.linkFile = link;
 	}
 	public void run() {
 		int j;
 		int i;
-		File file = new File(fileDistance);
+
+		File file = new File(linkFile);
+    	if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+	                e.printStackTrace();
+			}
+		}
 		FileWriter fw = null;
 		try {
-			fw = new FileWriter(file.getAbsoluteFile(),true);
+			fw = new FileWriter(file.getAbsoluteFile(),false);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -68,16 +77,17 @@ class ThreadDistance implements Runnable {
 }
   public class ThreadComputeDistance {
 		public static void main(String args[]) throws CloneNotSupportedException, IOException, InterruptedException {
-			List<Candidate> example = MethodSupport.setCandidate ("input/5/5.valid.arff","input/nhan.xml");
-	        List<Candidate> listCandidateTrains = new ArrayList<Candidate>();
-	        for (int  i = 0; i < 100; i++) {
-	            listCandidateTrains.add(example.get(i).clone());
-	        }
-	        List<Cluster> a = MethodSupport.setListClusters(listCandidateTrains,MethodSupport.LABEL);
-	        MethodSupport.runThreadDistance(a);
+//			List<Candidate> example = MethodSupport.setCandidate ("input/5/5.valid.arff","input/nhan.xml");
+//	        List<Candidate> listCandidateTrains = new ArrayList<Candidate>();
+//	        for (int  i = 0; i < 100; i++) {
+//	            listCandidateTrains.add(example.get(i).clone());
+//	        }
+//	        List<Cluster> a = MethodSupport.setListClusters(listCandidateTrains,MethodSupport.LABEL);
+//	        MethodSupport.runThreadDistance(a);
 			Distance test = new Distance();
 
-			Map<Point,Double> map = test.getMapDistances();
+			Map<Point,Double> map = null;
+//			= test.getMapDistances();
 	        for (Map.Entry<Point,Double> entry : map.entrySet()) {
 	            System.out.println("[A] : " + entry.getKey().getA()+ "[B]" + entry.getKey().getB()
 	                    + " [Value] : " + entry.getValue());

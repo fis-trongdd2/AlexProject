@@ -30,15 +30,14 @@ import method.support.MethodSupport;
 public class Distance {
     private Map<Point,Double> distances_;
     //chi cho phep lay map khoang cach nay tu file distance ra
-    public Map<Point, Double> getMapDistances () {
+    public Map<Point, Double> getMapDistances (String link) {
         Map nDistances_ = new HashMap<Point, Double>();
-        Path filePath = Paths.get("input/distance.txt");
+        Path filePath = Paths.get(link);
         Scanner scanner = null;
         Point p;
         double a,b,c;
         try {
             scanner = new Scanner(filePath);
-            int j = 0;
             while (scanner.hasNext()) {
                 a = scanner.nextDouble();
                 b = scanner.nextDouble();

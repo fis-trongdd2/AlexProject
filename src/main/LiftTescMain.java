@@ -161,7 +161,7 @@ public class LiftTescMain {
         }
 
         listCandidateTestsToLabel = MethodSupport.setLabelForUnlabel(listCandidateTestsToLabel,listCluster,-1);
-        System.out.println(MethodSupport.assessClustering(listCandidateTestsToLabel,listCandidateTests));
+        System.out.println(MethodSupport.assessClusteringCombination(listCandidateTestsToLabel,listCandidateTests));
         
         
         List<Candidate> listCandidatesUnlabel = new ArrayList<Candidate>();
